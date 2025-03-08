@@ -736,7 +736,7 @@ class Application:
         if not selected:
             messagebox.showwarning("警告", "請選擇客戶")
             return
-        if messagebox.askyesno("確認", "確定刪除所選客戶及其療程記錄？")):
+        if messagebox.askyesno("確認", "確定刪除所選客戶及其療程記錄？"):
             customer_ids = [self.customer_tree.item(item, 'values')[0] for item in selected]
             with self.db_lock:
                 with sqlite3.connect('secret_time.db') as conn:
@@ -832,7 +832,7 @@ class Application:
         if not selected:
             messagebox.showwarning("警告", "請選擇支出")
             return
-        if messagebox.askyesno("確認", "確定刪除所選支出？")):
+        if messagebox.askyesno("確認", "確定刪除所選支出？"):
             for item in selected:
                 expense_id = Database.execute('SELECT expense_id FROM Expenses WHERE expense_date = ? AND category = ? AND amount = ?', 
                                              (self.expense_tree.item(item, 'values')[0], self.expense_tree.item(item, 'values')[1], float(self.expense_tree.item(item, 'values')[2].replace('$', ''))), fetch=True)[0]['expense_id']
@@ -1048,7 +1048,7 @@ class Application:
                 messagebox.showwarning("警告", "請選擇一筆匯入記錄")
                 return
             import_id = history_tree.item(selected[0], 'values')[0]
-            if messagebox.askyesno("確認", f"確定刪除匯入 ID {import_id} 的所有相關數據？")):
+            if messagebox.askyesno("確認", f"確定刪除匯入 ID {import_id} 的所有相關數據？"):
                 with self.db_lock:
                     Database.execute('DELETE FROM Customer_Treatments WHERE import_id = ?', (import_id,))
                     Database.execute('DELETE FROM Import_History WHERE import_id = ?', (import_id,))
